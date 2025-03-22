@@ -1,11 +1,11 @@
-def merge_sort(arr) :
+def merge_sort_while(arr) :
     if len(arr) == 1 :
         return arr
     
     mid = len(arr) // 2
 
-    high_list = merge_sort(arr[mid:])
-    low_list = merge_sort(arr[:mid])
+    high_list = merge_sort_while(arr[mid:])
+    low_list = merge_sort_while(arr[:mid])
 
     merged_list = []
     l = h = 0
@@ -23,7 +23,39 @@ def merge_sort(arr) :
     merged_list += high_list[h:]
     return merged_list
 
-num_list = [1,7,3,9,2,7,4,2,3,5]
+def merge_sort_recusion(arr):
+    if len(arr) <= 1:
+        return arr
+    
+    mid  = len(arr) // 2
+    left = merge_sort_recusion(arr[:mid])
+    right = merge_sort_recusion(arr[mid:])
 
-print(merge_sort(num_list))
+    return merge_recusion(left, right)
+
+def merge_recusion(left, right) :
+    result = []
+    i = j = 0
+
+    while i < len(left) and j < len(right) :
+        if left[i] < right[j] :
+            result.append(left[i])
+            i += 1
+        
+        else:
+            result.append(right[j])
+            j += 1
+
+        result.extend(left[i:])
+        result.extend(right[j:])
+        return result
+
+arr = [5, 2, 4, 7, 1, 3, 6]
+sorted_arr = merge_sort_recusion(arr)
+print(sorted_arr)
+
+
+    
+
+
 
