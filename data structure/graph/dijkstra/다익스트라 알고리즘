@@ -1,0 +1,39 @@
+n, m = map(int, input().split())  # 노드 개수, 간선 개수
+k = int(input())  # 시작 노드
+INF = int(1e8)
+
+graph = [[] for _ in range(n + 1)]
+visited = [False] * (n + 1)
+distance = [INF] * (n + 1)
+
+for _ in range(m):
+    u, v, w = map(int, input().split())
+    graph[u].append((v, w))
+
+def get_smallest_node():
+    min_val = INF
+    index = 0
+    for i in range(1, n + 1):
+        if distance[i] < min_val and not visited[i]:
+            min_val = distance[i]
+            index = i
+    return index
+
+def dijkstra(start):
+    distance[start] = 0
+    visited[start] = True
+    for v, w in graph[start]:
+        distance[v] = w
+
+    for _ in range(n - 1):
+        now = get_smallest_node()
+        visited[now] = True
+        for v, w in graph[now]:
+            if distance[now] + w < distance[v]:
+                distance[v] = distance[now] + w
+
+dijkstra(k)
+
+# 출력 (1번 노드부터 n번 노드까지의 최단 거리)
+for i in range(1, n + 1):
+    print("INF" if distance[i] == INF else distance[i])
